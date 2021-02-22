@@ -7,6 +7,9 @@ import {
   GET_PRODUCTS,
   GET_PRODUCTS_SUCCESS,
   GET_PRODUCTS_ERROR,
+  DELETE_PRODUCT,
+  DELETE_PRODUCT_SUCCESS,
+  DELETE_PRODUCT_ERROR,
 } from '../types/index';
 
 export const createProductAction = (product) => {
@@ -90,5 +93,39 @@ const getAllProductsSuccess = (products) => ({
 
 const getAllProductsError = () => ({
   type: GET_PRODUCTS_ERROR,
+  payload: true,
+});
+
+export const deleteProductAction = (idProduct) => {
+  return async (dispatch) => {
+    dispatch(deleteProduct(idProduct));
+    try {
+      await db.collection('products').doc(idProduct).delete();
+      Swal.fire('Eliminado', 'El producto se eliminó correctamente', 'success');
+      dispatch(deleteProductSuccess());
+    } catch (error) {
+      console.log(error);
+      dispatch(deleteProductError());
+
+      Swal.fire({
+        icon: 'error',
+        title: 'Hubo un error',
+        text: 'Hubo un error, intenta de nuevo',
+      });
+    }
+  };
+};
+
+const deleteProduct = (idProduct) => ({
+  type: DELETE_PRODUCT,
+  payload: idProduct,
+});
+
+const deleteProductSuccess = () => ({
+  type: DELETE_PRODUCT_SUCCESS,
+});
+
+const deleteProductError = () => ({
+  type: DELETE_PRODUCT_ERROR,
   payload: true,
 });

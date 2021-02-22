@@ -35,11 +35,11 @@ export const NewProduct = ({ history }) => {
 
     setTimeout(() => {
       history.push('/');
-    }, 1000);
+    }, 500);
   };
   return (
     <div className="row justify-content-center mt-3">
-      <div className="col-md-6">
+      <div className="col-lg-6">
         <div className="card p-4">
           <div className="card-body">
             <h2 className="text-center mb-4">Agregar Nuevo Producto</h2>

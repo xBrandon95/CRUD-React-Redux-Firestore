@@ -22,10 +22,6 @@ export const Products = () => {
 
           {loading ? (
             <Spinner />
-          ) : products.length === 0 ? (
-            <h4 className="font-weight-bold alert alert-secondary text-center">
-              No hay productos, agrega uno :
-            </h4>
           ) : (
             <table className="table  table-hover">
               <thead className="bg-primary table-dark">
@@ -37,9 +33,19 @@ export const Products = () => {
                 </tr>
               </thead>
               <tbody>
-                {products.map((product, index) => (
-                  <ProductItem key={product.id} index={index} {...product} />
-                ))}
+                {products.length === 0 ? (
+                  <tr>
+                    <td colSpan="4">
+                      <h4 className="font-weight-bold alert alert-light text-center">
+                        No hay productos, agrega uno :D
+                      </h4>
+                    </td>
+                  </tr>
+                ) : (
+                  products.map((product, index) => (
+                    <ProductItem key={product.id} index={index} {...product} />
+                  ))
+                )}
               </tbody>
             </table>
           )}
