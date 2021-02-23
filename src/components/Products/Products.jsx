@@ -43,7 +43,11 @@ export const Products = () => {
                   </tr>
                 ) : (
                   products.map((product, index) => (
-                    <ProductItem key={product.id} index={index} {...product} />
+                    <ProductItem
+                      key={product.id}
+                      index={index}
+                      product={product}
+                    />
                   ))
                 )}
               </tbody>

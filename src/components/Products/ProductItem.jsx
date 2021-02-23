@@ -1,9 +1,16 @@
 import Swal from 'sweetalert2';
 import { useDispatch } from 'react-redux';
-import { deleteProductAction } from '../../redux/actions/productActions';
+import { useHistory } from 'react-router-dom';
+import {
+  deleteProductAction,
+  getProductUpdate,
+} from '../../redux/actions/productActions';
 
-export const ProductItem = ({ id, name, price, index }) => {
+export const ProductItem = ({ product, index }) => {
+  const { id, name, price } = product;
+
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const deleteProduct = (id) => {
     Swal.fire({
@@ -22,13 +29,22 @@ export const ProductItem = ({ id, name, price, index }) => {
     });
   };
 
+  const redirectUpdate = (product) => {
+    history.push(`/productos/editar/${product.id}`);
+    dispatch(getProductUpdate(product));
+  };
+
   return (
     <tr>
       <th scope="row">{index + 1} </th>
       <td>{name}</td>
       <td>$ {price}</td>
       <td>
-        <button type="button" className="btn btn-success mr-4">
+        <button
+          type="button"
+          className="btn btn-success mr-4"
+          onClick={() => redirectUpdate(product)}
+        >
           Editar
         </button>
         <button

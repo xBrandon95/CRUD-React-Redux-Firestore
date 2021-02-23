@@ -9,7 +9,10 @@ export const Header = () => {
         </Link>
 
         <ul className="navbar-nav">
-          <li className="nav-item active">
+          <li className="nav-item">
+            <Link to={'/'} className="btn btn-warning mr-4">
+              <strong>LISTA PRODUCTOS</strong>
+            </Link>
             <Link to={'/productos/nuevo'} className="btn btn-info">
               <strong>AGREGAR PRODUCTO &#43;</strong>
             </Link>

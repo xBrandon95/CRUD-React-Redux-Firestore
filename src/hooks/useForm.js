@@ -10,5 +10,5 @@ export const useForm = (initialState) => {
     });
   };
 
-  return [state, handleInputChange];
+  return [state, handleInputChange, setState];
 };

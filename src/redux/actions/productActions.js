@@ -10,6 +10,10 @@ import {
   DELETE_PRODUCT,
   DELETE_PRODUCT_SUCCESS,
   DELETE_PRODUCT_ERROR,
+  GET_PRODUCT_UPDATE,
+  UPDATE_PRODUCT,
+  UPDATE_PRODUCT_SUCCESS,
+  UPDATE_PRODUCT_ERROR,
 } from '../types/index';
 
 export const createProductAction = (product) => {
@@ -127,5 +131,54 @@ const deleteProductSuccess = () => ({
 
 const deleteProductError = () => ({
   type: DELETE_PRODUCT_ERROR,
+  payload: true,
+});
+
+export const getProductUpdate = (product) => ({
+  type: GET_PRODUCT_UPDATE,
+  payload: { ...product, price: product.price.toString() },
+});
+
+export const updateProductAction = (product) => {
+  return async (dispatch) => {
+    const { id, name, price } = product;
+    dispatch(updateProduct());
+    try {
+      await db
+        .collection('products')
+        .doc(id)
+        .update({ name, price: Number(price) });
+
+      dispatch(updateProductSuccess({ id, name, price }));
+
+      // Mostramos la alerta
+      Swal.fire(
+        'Producto Editado',
+        'El producto se editó correctamente',
+        'success'
+      );
+    } catch (error) {
+      console.log(error);
+      dispatch(updateProductError());
+      Swal.fire({
+        icon: 'error',
+        title: 'Hubo un error',
+        text: 'Hubo un error, intenta de nuevo',
+      });
+    }
+  };
+};
+
+const updateProduct = () => ({
+  type: UPDATE_PRODUCT,
+  payload: true,
+});
+
+const updateProductSuccess = (product) => ({
+  type: UPDATE_PRODUCT_SUCCESS,
+  payload: product,
+});
+const updateProductError = () => ({
+  type: UPDATE_PRODUCT_ERROR,
   payload: true,
 });

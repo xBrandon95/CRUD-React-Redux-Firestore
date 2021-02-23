@@ -8,6 +8,10 @@ import {
   DELETE_PRODUCT,
   DELETE_PRODUCT_SUCCESS,
   DELETE_PRODUCT_ERROR,
+  GET_PRODUCT_UPDATE,
+  UPDATE_PRODUCT,
+  UPDATE_PRODUCT_SUCCESS,
+  UPDATE_PRODUCT_ERROR,
 } from '../types/index';
 
 const initialState = {
@@ -15,10 +19,12 @@ const initialState = {
   error: null,
   loading: false,
   removeProductId: null,
+  updateProduct: null,
 };
 
 export const productReducer = (state = initialState, action) => {
   switch (action.type) {
+    case UPDATE_PRODUCT:
     case GET_PRODUCTS:
     case ADD_PRODUCT:
       return {
@@ -56,6 +62,23 @@ export const productReducer = (state = initialState, action) => {
         removeProductId: null,
       };
 
+    case GET_PRODUCT_UPDATE:
+      return {
+        ...state,
+        updateProduct: action.payload,
+      };
+
+    case UPDATE_PRODUCT_SUCCESS:
+      return {
+        ...state,
+        products: state.products.map((product) =>
+          product.id === action.payload.id ? action.payload : product
+        ),
+        loading: false,
+        updateProduct: null,
+      };
+
+    case UPDATE_PRODUCT_ERROR:
     case DELETE_PRODUCT_ERROR:
     case GET_PRODUCTS_ERROR:
     case ADD_PRODUCT_ERROR:
