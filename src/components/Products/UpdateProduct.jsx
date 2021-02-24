@@ -2,6 +2,10 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { useForm } from '../../hooks/useForm';
+import {
+  hideAlertAction,
+  showAlertAction,
+} from '../../redux/actions/alertActions';
 import { updateProductAction } from '../../redux/actions/productActions';
 import { Spinner } from '../Spinner';
 
@@ -9,6 +13,8 @@ export const UpdateProduct = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { updateProduct, loading } = useSelector((state) => state.products);
+
+  const { alert } = useSelector((state) => state.alert);
 
   const [product, handleInputChange, setProduct] = useForm({
     name: '',
@@ -28,8 +34,15 @@ export const UpdateProduct = () => {
 
     // validate form
     if (name.trim() === '' || price <= 0 || price === '') {
+      const alert = {
+        msg: 'Ambos campos son obligatorios',
+        class: 'alert alert-danger text-center text-uppercase p3',
+      };
+      dispatch(showAlertAction(alert));
       return;
     }
+
+    dispatch(hideAlertAction());
     // create new producto
     dispatch(updateProductAction(product));
 
@@ -44,6 +57,7 @@ export const UpdateProduct = () => {
         <div className="card">
           <div className="card-body">
             <h2 className="text-center mb-4">Editar Producto</h2>
+            {alert && <p className={alert.class}>{alert.msg}</p>}
             <form onSubmit={handleSubmitUpdate}>
               <div className="form-group">
                 <label>Nombre:</label>
