@@ -42,7 +42,7 @@ export const ProductItem = ({ product, index }) => {
       <td>
         <button
           type="button"
-          className="btn btn-success mr-4"
+          className="btn btn-success mr-4 mb-3 mb-sm-0"
           onClick={() => redirectUpdate(product)}
         >
           Editar

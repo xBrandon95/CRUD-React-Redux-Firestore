@@ -84,6 +84,7 @@ export const UpdateProduct = () => {
               <button
                 type="submit"
                 className="btn btn-primary font-weight-bold btn-block text-uppercase mt-5"
+                disabled={loading}
               >
                 GUARDAR CAMBIOS
               </button>
