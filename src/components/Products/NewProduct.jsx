@@ -22,7 +22,7 @@ export const NewProduct = ({ history }) => {
   const { loading } = useSelector((state) => state.products);
   const { alert } = useSelector((state) => state.alert);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // validate form
@@ -38,7 +38,7 @@ export const NewProduct = ({ history }) => {
     dispatch(hideAlertAction());
 
     // create new producto
-    dispatch(
+    await dispatch(
       createProductAction({
         name,
         price: Number(price),
@@ -46,9 +46,7 @@ export const NewProduct = ({ history }) => {
       })
     );
 
-    setTimeout(() => {
-      history.push('/');
-    }, 500);
+    history.push('/');
   };
   return (
     <div className="row justify-content-center mt-3">

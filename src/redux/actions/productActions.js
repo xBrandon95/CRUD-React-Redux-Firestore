@@ -19,6 +19,7 @@ import {
 export const createProductAction = (product) => {
   return async (dispatch) => {
     dispatch(createProduct());
+
     try {
       // Insert to DB
       const data = await db.collection('products').add(product);
