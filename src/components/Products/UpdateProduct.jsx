@@ -29,7 +29,7 @@ export const UpdateProduct = () => {
   }, [updateProduct]);
   const { name, price } = product;
 
-  const handleSubmitUpdate = (e) => {
+  const handleSubmitUpdate = async (e) => {
     e.preventDefault();
 
     // validate form
@@ -44,11 +44,9 @@ export const UpdateProduct = () => {
 
     dispatch(hideAlertAction());
     // create new producto
-    dispatch(updateProductAction(product));
+    await dispatch(updateProductAction(product));
 
-    setTimeout(() => {
-      history.push('/');
-    }, 500);
+    history.push('/');
   };
 
   return (
